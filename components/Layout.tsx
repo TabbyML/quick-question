@@ -66,7 +66,7 @@ export default function Layout(props: LayoutProps) {
           open={true}
           style={{ height: "100vh", position: "static" }}
         >
-          <Link href="/workspaces" as={`/workspaces`} passHref>
+          <Link href="https://tabbyml.com">
             <Toolbar
               style={{
                 position: "relative",
@@ -104,24 +104,6 @@ export default function Layout(props: LayoutProps) {
                 <ListItemText style={{ marginTop: "-6px" }}>
                   <Text type="text" variant="subtitle2">
                     Search
-                  </Text>
-                </ListItemText>
-              </ListItemButton>
-            </Link>
-            <Link href={`/settings`} as={`/settings`} passHref>
-              <ListItemButton
-                sx={{
-                  display: "block",
-                  textAlign: "center",
-                  padding: "10px 0",
-                }}
-              >
-                <ListItemIcon style={{ display: "block" }}>
-                  <FaRegSun />
-                </ListItemIcon>
-                <ListItemText style={{ marginTop: "-6px" }}>
-                  <Text type="text" variant="subtitle2">
-                    Settings
                   </Text>
                 </ListItemText>
               </ListItemButton>
