@@ -1,8 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PineconeStore } from "langchain/vectorstores";
+import { HNSWLib } from "langchain/vectorstores";
 import { OpenAIEmbeddings } from "langchain/embeddings";
-import { PineconeClient } from "pinecone-client";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,21 +10,11 @@ export default async function handler(
   const { query } = req.body;
   switch (req.method) {
     case "POST": {
-      const pineconeClient = new PineconeClient({
-        apiKey: process.env.PINECONE_API_KEY,
-        baseUrl: process.env.PINECONE_BASE_URL,
-      });
-      const openaiClient = new OpenAIEmbeddings({
-        openAIApiKey: process.env.OPENAI_API_KEY,
-      });
-      const pineconeStore = await PineconeStore.fromExistingIndex(
-        pineconeClient,
-        openaiClient
+      const vectorStore = await HNSWLib.load(
+        "public/repos/huggingface/diffusers",
+        new OpenAIEmbeddings()
       );
-      const queryResult = await pineconeStore.similaritySearchWithScore(
-        query,
-        5
-      );
+      const queryResult = await vectorStore.similaritySearchWithScore(query, 5);
 
       let formattedResults: {
         pageContent: any;
