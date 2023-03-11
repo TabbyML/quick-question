@@ -28,7 +28,7 @@ export default async function handler(
         NUM_RESULTS
       );
 
-      const formattedResults = queryResult.map(async (result) => {
+      const formattedResults = queryResult.map(async (result : any[]) => {
         const code = result[0].pageContent;
         const prompt = CodeTemplate.format({ query, code });
         return {
