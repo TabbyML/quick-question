@@ -1,6 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import path from "path";
+
 import { HNSWLib } from "langchain/vectorstores";
 import { OpenAIEmbeddings } from "langchain/embeddings";
 import { OpenAI } from "langchain/llms";
@@ -18,7 +20,7 @@ export default async function handler(
       const log = console.log;
       console.log = () => {};
       const vectorStore = await HNSWLib.load(
-        "public/repos/huggingface/diffusers",
+        path.join(process.cwd(), "repos/huggingface/diffusers"),
         new OpenAIEmbeddings()
       );
 
