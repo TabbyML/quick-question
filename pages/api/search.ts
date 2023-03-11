@@ -20,7 +20,7 @@ export default async function handler(
       const log = console.log;
       console.log = () => {};
       const vectorStore = await HNSWLib.load(
-        path.join(process.cwd(), "repos/huggingface/diffusers"),
+        path.join(process.cwd(), "repo"),
         new OpenAIEmbeddings()
       );
 

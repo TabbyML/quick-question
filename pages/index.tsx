@@ -15,6 +15,8 @@ import Layout from "components/Layout";
 
 import ReactMarkdown from "react-markdown";
 
+import RepoMetadata from "repo/metadata.json";
+
 interface CodeSnippetMeta {
   source: string;
   score: number;
@@ -28,7 +30,7 @@ interface CodeSnippet {
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>(
-    "How to run stable diffusion pipeline?"
+    RepoMetadata.defaultQuery
   );
   const [isLoading, setIsLoading] = useState(false);
   const [matches, setMatches] = useState<CodeSnippet[]>([]);
@@ -78,7 +80,7 @@ export default function Home() {
               >
                 <Grid item xs={10} sx={{ pl: 2 }}>
                   <Text type="header" variant="subtitle1">
-                    huggingface/diffusers
+                    {RepoMetadata.name}
                   </Text>
                 </Grid>
               </Grid>
@@ -186,7 +188,7 @@ export default function Home() {
                         label="View on Github"
                         color="default"
                         component="a"
-                        href={`https://github.com/huggingface/diffusers/tree/main/${match.metadata.source}`}
+                        href={`https://github.com/${RepoMetadata.name}/tree/main/${match.metadata.source}`}
                         size="small"
                         sx={{ fontSize: "0.85rem", ml: 1, p: 1 }}
                         variant="outlined"
