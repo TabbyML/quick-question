@@ -3,7 +3,7 @@
 An incubating AI-powered stack overflow for your codebase.
 
 > **Warning**
-> This is work in progress, it is not a production ready.
+> This is work in progress, it is not a production ready solution.
 
 ## Acknowledgement
 
