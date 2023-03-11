@@ -55,11 +55,6 @@ export default function Home() {
       <Layout>
         <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
           <>
-            <Grid container>
-              <Text type="header" variant="h4">
-                Code Search by TabbyML
-              </Text>
-            </Grid>
             <Grid
               container
               alignItems="center"
