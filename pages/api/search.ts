@@ -1,9 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+
 import { HNSWLib } from "langchain/vectorstores";
 import { OpenAIEmbeddings } from "langchain/embeddings";
+import { OpenAI } from "langchain/llms";
+import { PromptTemplate } from "langchain/prompts";
 
-const log = console.log;
+const NUM_RESULTS = 3;
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,29 +15,32 @@ export default async function handler(
   const { query } = req.body;
   switch (req.method) {
     case "POST": {
-      console.log = () => {}
+      const log = console.log;
+      console.log = () => {};
       const vectorStore = await HNSWLib.load(
         "public/repos/huggingface/diffusers",
         new OpenAIEmbeddings()
       );
-      console.log = log;
-      const queryResult = await vectorStore.similaritySearchWithScore(query, 5);
 
-      let formattedResults: {
-        pageContent: any;
-        metadata: { source: any; score: any };
-      }[] = [];
-      queryResult.map((result: any[]) => {
-        formattedResults.push({
-          pageContent: result[0].pageContent,
+      const llm = new OpenAI({ temperature: 0.2 });
+      const queryResult = await vectorStore.similaritySearchWithScore(
+        query,
+        NUM_RESULTS
+      );
+
+      const formattedResults = queryResult.map(async (result) => {
+        const code = result[0].pageContent;
+        const prompt = CodeTemplate.format({ query, code });
+        return {
+          pageContent: code,
           metadata: {
             source: result[0].metadata.source,
             score: 1.0 - result[1],
+            summary: await llm.call(prompt),
           },
-        });
+        };
       });
-
-      return res.status(200).json(formattedResults);
+      return res.status(200).json(await Promise.all(formattedResults));
     }
     default: {
       res.setHeader("Allow", ["POST"]);
@@ -42,3 +48,14 @@ export default async function handler(
     }
   }
 }
+
+const CodeTemplate = new PromptTemplate({
+  template: `Given the following python code and a question, create a concise answer in markdown.
+=========
+{code}
+=========
+
+QUESTION: {query}
+FINAL ANSWER:`,
+  inputVariables: ["query", "code"],
+});

@@ -61,3 +61,11 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.summary {
+  padding: 8px;
+  border-radius: 4px;
+  line-height: 1.6;
+  background: #244;
+  margin-bottom: 1em;
+}

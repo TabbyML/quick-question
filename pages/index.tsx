@@ -13,9 +13,12 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import Text from "components/Text";
 import Layout from "components/Layout";
 
+import ReactMarkdown from "react-markdown";
+
 interface CodeSnippetMeta {
   source: string;
   score: number;
+  summary: string;
 }
 
 interface CodeSnippet {
@@ -24,7 +27,9 @@ interface CodeSnippet {
 }
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>(
+    "How to run stable diffusion pipeline?"
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [matches, setMatches] = useState<CodeSnippet[]>([]);
 
@@ -112,7 +117,6 @@ export default function Home() {
                   <TextField
                     id="document_id"
                     label=""
-                    placeholder="What is stable diffusion?"
                     variant="outlined"
                     fullWidth
                     value={searchQuery}
@@ -199,6 +203,11 @@ export default function Home() {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} key={it} sx={{ mb: 8 }}>
+                    <Grid item xs={12}>
+                      <ReactMarkdown className="summary markdown-body">
+                        {match.metadata.summary}
+                      </ReactMarkdown>
+                    </Grid>
                     <Grid item xs={12}>
                       <SyntaxHighlighter
                         language="python"
