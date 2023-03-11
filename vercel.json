@@ -1,7 +1,7 @@
 {
   "functions": {
-    "pages/api/search.js": {
-      "includeFiles": "repo/**/*"
+    "pages/api/search.ts": {
+      "includeFiles": "repos/**/*"
     }
   }
 }
