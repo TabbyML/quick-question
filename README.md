@@ -1,6 +1,6 @@
-## ⁉️ Quick Question by TabbyML 
+## ⁉️ Quick Question
 
-An incubating AI-powered stack overflow for your codebase.
+An incubating AI-powered stack overflow for your codebase, by [TabbyML](https://tabbyml.com)
 
 > **Warning**
 > This is work in progress, it is not a production ready solution.
