@@ -1,23 +1,14 @@
 import { useEffect, useState } from "react";
 
-import Head from "next/head";
-
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
-import path from "path";
-
-import Alert from "@mui/material/Alert";
 import Container from "@mui/material/Container";
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import LoadingButton from "@mui/lab/LoadingButton";
 import LaunchIcon from "@mui/icons-material/Launch";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import Text from "components/Text";
 import Layout from "components/Layout";
@@ -32,24 +23,10 @@ interface CodeSnippet {
   metadata: CodeSnippetMeta;
 }
 
-interface LocalStorageObject {
-  id: number;
-  name: string;
-  full_name: string;
-  owner: string;
-  html_url: string;
-  default_branch: string;
-  indexed_by_wizi: boolean;
-}
-
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [matches, setMatches] = useState<CodeSnippet[]>([]);
-  const [userRepos, setUserRepos] = useState<any[]>([]);
-  const [indexingInProgress, setIndexingInProgress] = useState(false);
-  const [indexed, setIndexed] = useState(false);
-  const [selectedRepoId, setSelectedRepoId] = useState<string>("");
 
   const getSearchResults = async () => {
     setIsLoading(true);
@@ -66,28 +43,6 @@ export default function Home() {
     const data = await response.json();
     setMatches(data);
     setIsLoading(false);
-  };
-
-  const setSelectedRepo = (id: string) => {
-    setSelectedRepoId(id);
-    const repo = userRepos.filter((repo) => repo.id.toString() === id)[0];
-    localStorage.setItem(
-      "wizi-ai-selected-repo",
-      JSON.stringify({
-        id: repo.id,
-        name: repo.name,
-        full_name: repo.full_name,
-        owner: repo.owner.login,
-        html_url: repo.html_url,
-        default_branch: repo.default_branch,
-        indexed_by_wizi: false,
-      })
-    );
-    const localObject = localStorage.getItem("wizi-ai-selected-repo");
-    setIndexed(false);
-    if (localObject) {
-      setLocalStorageObject(JSON.parse(localObject));
-    }
   };
 
   return (
@@ -157,13 +112,16 @@ export default function Home() {
                   <TextField
                     id="document_id"
                     label=""
-                    placeholder="Where can I check if user has an active subscription?"
+                    placeholder="What is stable diffusion?"
                     variant="outlined"
                     fullWidth
                     value={searchQuery}
                     onChange={(event) =>
                       setSearchQuery(event.currentTarget.value)
                     }
+                    onKeyDown={(event) => {
+                      if (event.keyCode === 13) getSearchResults();
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -243,11 +201,8 @@ export default function Home() {
                   <Grid item xs={12} key={it} sx={{ mb: 8 }}>
                     <Grid item xs={12}>
                       <SyntaxHighlighter
-                        language="jsx"
+                        language="python"
                         style={atomDark}
-                        showLineNumbers
-                        showInlineLineNumbers
-                        startingLineNumber={1}
                         wrapLongLines
                         customStyle={{ color: "red" }}
                       >
