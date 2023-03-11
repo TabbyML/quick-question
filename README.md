@@ -1,5 +1,7 @@
 ## ⁉️ Quick Question by TabbyML 
 
+![Example Quick Question](example-quick-question.png)
+
 An incubating AI-powered stack overflow for your codebase.
 
 > **Warning**
