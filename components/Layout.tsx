@@ -13,7 +13,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-import { FaRegSun, FaSearch } from "react-icons/fa";
+import { FaHome, FaSearch } from "react-icons/fa";
 
 import Text from "components/Text";
 
@@ -77,12 +77,7 @@ export default function Layout(props: LayoutProps) {
                 width: "26px",
               }}
             >
-              <Image
-                src="/wizi-icon.png"
-                alt="wizi icon"
-                width={26}
-                height={26}
-              />
+              <FaHome size="26" />
             </Toolbar>
           </Link>
           <Divider />
