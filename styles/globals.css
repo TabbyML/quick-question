@@ -71,3 +71,9 @@ a {
   background: #244;
   margin-bottom: 1em;
 }
+
+@media (orientation: portrait) {
+  .menu {
+    display: none;
+  }
+}

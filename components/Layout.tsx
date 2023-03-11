@@ -62,6 +62,7 @@ export default function Layout(props: LayoutProps) {
     >
       <Box sx={{ display: "flex" }}>
         <Drawer
+          className="menu"
           variant="permanent"
           open={true}
           style={{ height: "100vh", position: "static" }}
