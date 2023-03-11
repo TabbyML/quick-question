@@ -5,6 +5,8 @@ An incubating AI-powered stack overflow for your codebase.
 > **Warning**
 > This is work in progress, it is not a production ready solution.
 
+[Live Demo for huggingface/diffusers](https://quick-question.vercel.app)
+
 ![Example Quick Question](example-quick-question.png)
 
 ## Acknowledgement
