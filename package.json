@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "cd indexer && yarn --prod",
     "index": "./indexer/node_modules/ts-node/dist/bin.js indexer/src/index.ts -i $REPO_DIR/metadata.json",
     "index:local": "dotenv -e .env.local yarn index"
   },
@@ -30,7 +29,6 @@
     "langchain": "^0.0.11",
     "next": "13.1.6",
     "openai": "^3.1.0",
-    "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
