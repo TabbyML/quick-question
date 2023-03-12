@@ -15,8 +15,6 @@ import Layout from "components/Layout";
 
 import ReactMarkdown from "react-markdown";
 
-import RepoMetadata from "repo/metadata.json";
-
 interface CodeSnippetMeta {
   source: string;
   score: number;
@@ -29,9 +27,9 @@ interface CodeSnippet {
   metadata: CodeSnippetMeta;
 }
 
-export default function Home() {
+export default function Home({ metadata }) {
   const [searchQuery, setSearchQuery] = useState<string>(
-    RepoMetadata.exampleQueries[0]
+    metadata.exampleQueries[0]
   );
   const [isLoading, setIsLoading] = useState(false);
   const [matches, setMatches] = useState<CodeSnippet[]>([]);
@@ -81,7 +79,7 @@ export default function Home() {
               >
                 <Grid item xs={10} sx={{ pl: 2 }}>
                   <Text type="header" variant="subtitle1">
-                    {RepoMetadata.name}
+                    {metadata.name}
                   </Text>
                 </Grid>
               </Grid>
@@ -117,7 +115,7 @@ export default function Home() {
                     label=""
                     variant="outlined"
                     fullWidth
-                    placeholder={RepoMetadata.exampleQueries[0]}
+                    placeholder={metadata.exampleQueries[0]}
                     value={searchQuery}
                     onChange={(event) =>
                       setSearchQuery(event.currentTarget.value)
@@ -129,7 +127,7 @@ export default function Home() {
                 </Grid>
                 <Grid item xs={12} sx={{ mt: 2 }}>
                   <Grid container spacing={1}>
-                    {RepoMetadata.exampleQueries.map((x, i) => (
+                    {metadata.exampleQueries.map((x, i) => (
                       <Grid item key={i}>
                         <Chip label={x} onClick={() => setSearchQuery(x)} />
                       </Grid>
@@ -199,7 +197,7 @@ export default function Home() {
                         label="View on Github"
                         color="default"
                         component="a"
-                        href={`https://github.com/${RepoMetadata.name}/tree/main/${match.metadata.source}#L${match.metadata.lineNumber}`}
+                        href={`https://github.com/${metadata.name}/tree/main/${match.metadata.source}#L${match.metadata.lineNumber}`}
                         size="small"
                         sx={{ fontSize: "0.85rem", ml: 1, p: 1 }}
                         variant="outlined"
@@ -237,4 +235,19 @@ export default function Home() {
       </Layout>
     </main>
   );
+}
+
+import fs from "fs";
+import path from "path";
+
+export async function getServerSideProps(context) {
+  const metadataFile = path.join(
+    process.cwd(),
+    process.env.REPO_DIR,
+    "metadata.json"
+  );
+  const metadata = JSON.parse(fs.readFileSync(metadataFile));
+  return {
+    props: { metadata },
+  };
 }
