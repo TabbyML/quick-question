@@ -30,9 +30,7 @@ interface CodeSnippet {
 }
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState<string>(
-    RepoMetadata.defaultQuery
-  );
+  const [searchQuery, setSearchQuery] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
   const [matches, setMatches] = useState<CodeSnippet[]>([]);
 
@@ -117,6 +115,7 @@ export default function Home() {
                     label=""
                     variant="outlined"
                     fullWidth
+                    placeholder={RepoMetadata.exampleQueries[0]}
                     value={searchQuery}
                     onChange={(event) =>
                       setSearchQuery(event.currentTarget.value)
@@ -125,6 +124,15 @@ export default function Home() {
                       if (event.keyCode === 13) getSearchResults();
                     }}
                   />
+                </Grid>
+                <Grid item xs={12} sx={{ mt: 2 }}>
+                  <Grid container spacing={1}>
+                    {RepoMetadata.exampleQueries.map((x, i) => (
+                      <Grid item key={i}>
+                        <Chip label={x} onClick={() => setSearchQuery(x)} />
+                      </Grid>
+                    ))}
+                  </Grid>
                 </Grid>
               </Grid>
               <Grid

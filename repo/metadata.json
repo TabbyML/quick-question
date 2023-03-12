@@ -1,4 +1,8 @@
 {
   "name": "huggingface/diffusers",
-  "defaultQuery": "How to run stable diffusion pipeline?"
+  "exampleQueries": [
+    "How to run stable diffusion pipeline?",
+    "How to do img2img with stable diffusion pipeline?",
+    "How to use dreambooth for finetuning?"
+  ]
 }
