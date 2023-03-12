@@ -293,7 +293,7 @@ export async function getServerSideProps(context: any) {
 
   const metadataFile = path.join(
     process.cwd(),
-    "data/diffusers",
+    process.env.REPO_DIR!,
     "metadata.json"
   );
   const metadata = JSON.parse(fs.readFileSync(metadataFile, "utf-8"));
