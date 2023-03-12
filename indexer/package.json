@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "commander": "^10.0.0"
+    "commander": "^10.0.0",
+    "tree-sitter": "^0.20.1",
+    "tree-sitter-python": "^0.20.1"
   }
 }
