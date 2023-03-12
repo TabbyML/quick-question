@@ -293,7 +293,7 @@ export async function getServerSideProps(context: any) {
 
   const metadataFile = path.join(
     process.cwd(),
-    process.env.REPO_DIR!,
+    "data/diffusers",
     "metadata.json"
   );
   const metadata = JSON.parse(fs.readFileSync(metadataFile, "utf-8"));
@@ -310,6 +310,13 @@ function indexingJob(server: any): IndexingResult {
       return { status: "pending" };
     }
   } else {
+    if (
+      fs.existsSync(path.join(process.cwd(), process.env.REPO_DIR!, "index/docstore.json"))
+    ) {
+      server.indexingJob = { status: "success" };
+      return server.indexingJob;
+    }
+
     server.indexingJob = new Promise((resolve, reject) => {
       exec("yarn index --no-dryrun", (error, stdout, stderr) => {
         if (error) {

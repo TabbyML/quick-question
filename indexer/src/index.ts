@@ -90,10 +90,6 @@ async function main({ input, dryrun }: IndexParams) {
 
   // Clone github
   if (fs.existsSync(repositoryDir)) {
-    if (fs.existsSync(indexDir)) {
-      // Index exists, skip indexing for now.
-      return;
-    }
     console.log("Git repository exists, updating...");
     const git = simpleGit(repositoryDir);
     await git.pull();
