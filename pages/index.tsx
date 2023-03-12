@@ -30,7 +30,9 @@ interface CodeSnippet {
 }
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState<string>();
+  const [searchQuery, setSearchQuery] = useState<string>(
+    RepoMetadata.exampleQueries[0]
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [matches, setMatches] = useState<CodeSnippet[]>([]);
 
@@ -218,10 +220,10 @@ export default function Home() {
                       <SyntaxHighlighter
                         language="python"
                         style={atomDark}
-                        wrapLongLines
                         customStyle={{ color: "red" }}
                         startingLineNumber={match.metadata.lineNumber}
                         showLineNumbers
+                        wrapLines
                       >
                         {match.pageContent}
                       </SyntaxHighlighter>
