@@ -4,25 +4,10 @@ import path from "path";
 import { Command } from "commander";
 import { HNSWLib } from "langchain/vectorstores";
 import { OpenAIEmbeddings } from "langchain/embeddings";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { Document } from "langchain/document";
 import { encoding_for_model } from "@dqbd/tiktoken";
 
-const codeSplitter = new RecursiveCharacterTextSplitter({
-  chunkSize: 800,
-  chunkOverlap: 0,
-  separators: [
-    // First, try to split along class definitions
-    "\nclass ",
-    "\ndef ",
-    "\n\tdef ",
-
-    // Now split by the normal type of lines
-    "\n\n",
-    "\n",
-    " ",
-    "",
-  ],
-});
+import { parseFile } from "./parser.mjs";
 
 async function* walk(dir) {
   for await (const d of await fs.promises.opendir(dir)) {
@@ -33,20 +18,20 @@ async function* walk(dir) {
 }
 
 async function indexRepo({ input, output, dryrun }) {
-  let allDocuments = [];
+  const MAX_DOC_LENGTH = 1600;
+  const allDocuments = [];
 
   for await (const p of walk(input)) {
-    if (p.endsWith(".py")) {
-      const content = fs.readFileSync(p);
-      const documents = codeSplitter.createDocuments(
-        [fs.readFileSync(p, "utf-8")],
-        [
-          {
-            source: p,
-          },
-        ]
-      );
-      allDocuments = [...allDocuments, ...documents];
+    const chunks = await parseFile(p);
+    for (const { code, position } of chunks) {
+      const document = new Document({
+        pageContent: code.slice(0, MAX_DOC_LENGTH),
+        metadata: {
+          source: path.relative(input, p),
+          position,
+        },
+      });
+      allDocuments.push(document);
     }
   }
 
