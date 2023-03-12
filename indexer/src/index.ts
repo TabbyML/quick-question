@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 
+import { simpleGit } from "simple-git";
+
 import { Command } from "commander";
 import { HNSWLib } from "langchain/vectorstores";
 import { OpenAIEmbeddings } from "langchain/embeddings";
@@ -17,13 +19,7 @@ async function* walk(dir: string): AsyncIterable<string> {
   }
 }
 
-interface IndexParams {
-  input: string;
-  output: string;
-  dryrun: boolean;
-}
-
-async function indexRepo({ input, output, dryrun }: IndexParams) {
+async function indexRepo(input: string, output: string, dryrun: boolean) {
   const MAX_DOC_LENGTH = 1600;
   const allDocuments = [];
 
@@ -77,12 +73,42 @@ async function indexRepo({ input, output, dryrun }: IndexParams) {
   await vectorStore.save(output);
 }
 
+interface IndexParams {
+  input: string;
+  dryrun: boolean;
+}
+
+async function main({ input, dryrun }: IndexParams) {
+  input = path.resolve(input);
+  console.log("Processing metadata", input);
+  const metadata = JSON.parse(fs.readFileSync(input, "utf-8"));
+
+  // Setup directories.
+  const baseDir = path.dirname(input);
+  const repositoryDir = path.join(baseDir, "repository");
+  const indexDir = path.join(baseDir, "index");
+
+  // Clone github
+  if (fs.existsSync(repositoryDir)) {
+    console.log("Git repository exists, updating...");
+    const git = simpleGit(repositoryDir);
+    await git.pull();
+  } else {
+    console.log("Git repository does not exists, cloning...");
+    const git = simpleGit();
+    const githubUrl = `https://github.com/${metadata.name}`;
+    git.clone(githubUrl, repositoryDir, { "--depth": 1 });
+  }
+
+  // Build index.
+  await indexRepo(repositoryDir, indexDir, dryrun);
+}
+
 const program = new Command();
 
 program
-  .requiredOption("-i, --input <path>", "Input directory for source code files")
-  .option("-o, --output <path>", "Output directory for index")
+  .requiredOption("-i, --input <config>", "Configuration file")
   .option("--no-dryrun")
-  .action(indexRepo);
+  .action(main);
 
 program.parse();
