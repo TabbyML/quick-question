@@ -1,0 +1,7 @@
+{
+  "name": "pallets/flask",
+  "exampleQueries": [
+    "How to run create a post endpoint?",
+    "How to implement basic authentication"
+  ]
+}

@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import path from "path";
@@ -20,7 +19,7 @@ export default async function handler(
       const log = console.log;
       console.log = () => {};
       const vectorStore = await HNSWLib.load(
-        path.join(process.cwd(), process.env.REPO_DIR),
+        path.join(process.cwd(), process.env.REPO_DIR!, "index"),
         new OpenAIEmbeddings()
       );
 
