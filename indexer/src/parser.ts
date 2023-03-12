@@ -1,13 +1,28 @@
 import fs from "fs";
 import path from "path";
 
-import TreeSitter from "tree-sitter";
-import Python from "tree-sitter-python";
-import { TextBuffer } from "superstring";
+import TreeSitter, { SyntaxNode } from "tree-sitter";
+import { TextBuffer, Location } from "superstring";
 
-const LanguageInfos = [
+export interface Chunk {
+  code: string;
+  range: {
+    start: Location;
+    end: Location;
+  };
+}
+
+interface LanguageInfo {
+  language: any;
+  extensions: Array<string>;
+  nodeTypes: Array<string>;
+  maxLevel: number;
+  minLoc: number;
+}
+
+const LanguageInfos: Array<LanguageInfo> = [
   {
-    language: Python,
+    language: require("tree-sitter-python"),
     extensions: [".py"],
     nodeTypes: ["function_definition", "class_definition"],
     maxLevel: 3,
@@ -15,7 +30,7 @@ const LanguageInfos = [
   },
 ];
 
-export async function parseFile(file) {
+export async function parseFile(file: string): Promise<Chunk[]> {
   const ext = path.extname(file);
   const langInfo = LanguageInfos.find((x) => x.extensions.includes(ext));
   if (!langInfo) {
@@ -33,13 +48,18 @@ export async function parseFile(file) {
   );
 }
 
-async function toArray(asyncIterator) {
+async function toArray(asyncIterator: AsyncIterable<Chunk>): Promise<Chunk[]> {
   const arr = [];
   for await (const i of asyncIterator) arr.push(i);
   return arr;
 }
 
-async function* walkTree(code, info, level, node) {
+async function* walkTree(
+  code: TextBuffer,
+  info: LanguageInfo,
+  level: number,
+  node: SyntaxNode
+): AsyncIterable<Chunk> {
   if (level > info.maxLevel) return;
 
   if (
@@ -51,7 +71,7 @@ async function* walkTree(code, info, level, node) {
         start: node.startPosition,
         end: node.endPosition,
       }),
-      position: {
+      range: {
         start: node.startPosition,
         end: node.startPosition,
       },

@@ -7,9 +7,9 @@ import { OpenAIEmbeddings } from "langchain/embeddings";
 import { Document } from "langchain/document";
 import { encoding_for_model } from "@dqbd/tiktoken";
 
-import { parseFile } from "./parser.mjs";
+import { parseFile } from "./parser";
 
-async function* walk(dir) {
+async function* walk(dir: string): AsyncIterable<string> {
   for await (const d of await fs.promises.opendir(dir)) {
     const entry = path.join(dir, d.name);
     if (d.isDirectory()) yield* walk(entry);
@@ -17,18 +17,24 @@ async function* walk(dir) {
   }
 }
 
-async function indexRepo({ input, output, dryrun }) {
+interface IndexParams {
+  input: string;
+  output: string;
+  dryrun: boolean;
+}
+
+async function indexRepo({ input, output, dryrun }: IndexParams) {
   const MAX_DOC_LENGTH = 1600;
   const allDocuments = [];
 
   for await (const p of walk(input)) {
     const chunks = await parseFile(p);
-    for (const { code, position } of chunks) {
+    for (const { code, range } of chunks) {
       const document = new Document({
         pageContent: code.slice(0, MAX_DOC_LENGTH),
         metadata: {
           source: path.relative(input, p),
-          position,
+          range,
         },
       });
       allDocuments.push(document);
