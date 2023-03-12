@@ -30,7 +30,7 @@ export default async function handler(
         NUM_RESULTS
       );
 
-      const formattedResults = queryResult.map(async (result : any[]) => {
+      const formattedResults = queryResult.map(async (result: any[]) => {
         const code = result[0].pageContent;
         const prompt = CodeTemplate.format({ query, code });
         return {
@@ -39,6 +39,7 @@ export default async function handler(
             source: result[0].metadata.source,
             score: 1.0 - result[1],
             summary: await llm.call(prompt),
+            lineNumber: result[0].metadata.range.start.row + 1,
           },
         };
       });

@@ -21,6 +21,7 @@ interface CodeSnippetMeta {
   source: string;
   score: number;
   summary: string;
+  lineNumber: number;
 }
 
 interface CodeSnippet {
@@ -188,7 +189,7 @@ export default function Home() {
                         label="View on Github"
                         color="default"
                         component="a"
-                        href={`https://github.com/${RepoMetadata.name}/tree/main/${match.metadata.source}`}
+                        href={`https://github.com/${RepoMetadata.name}/tree/main/${match.metadata.source}#L${match.metadata.lineNumber}`}
                         size="small"
                         sx={{ fontSize: "0.85rem", ml: 1, p: 1 }}
                         variant="outlined"
@@ -211,6 +212,8 @@ export default function Home() {
                         style={atomDark}
                         wrapLongLines
                         customStyle={{ color: "red" }}
+                        startingLineNumber={match.metadata.lineNumber}
+                        showLineNumbers
                       >
                         {match.pageContent}
                       </SyntaxHighlighter>
