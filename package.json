@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "cd indexer && yarn --prod"
+    "postinstall": "cd indexer && yarn --prod",
+    "index": "./indexer/node_modules/ts-node/dist/bin.js indexer/src/index.ts -i $REPO_DIR/metadata.json",
+    "index:local": "dotenv -e .env.local yarn index"
   },
   "dependencies": {
     "@dqbd/tiktoken": "^0.3.0",
@@ -21,6 +23,7 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@types/react-syntax-highlighter": "^15.5.6",
+    "dotenv-cli": "^7.1.0",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "hnswlib-node": "^1.4.2",
