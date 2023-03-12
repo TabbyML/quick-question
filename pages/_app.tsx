@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
         disabled: "#888",
       },
       primary: {
-        main: "#00df98", // green: #00df98
+        main: "#FDFDBD",
       },
       secondary: {
         main: "#fff",
