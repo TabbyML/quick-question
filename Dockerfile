@@ -1,8 +1,5 @@
 FROM node:16
 
-RUN npm config set registry https://registry.npmmirror.com
-RUN npm config set sharp_libvips_binary_host https://npmmirror.com/mirrors/sharp-libvips
-
 WORKDIR /usr/src/app/indexer
 
 COPY indexer/package.json ./
