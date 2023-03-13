@@ -40,6 +40,9 @@ docker run --rm -it -p 3000:3000 \
 3. Copy `.env.sample` to `.env.local`, and set your `OPENAI_API_KEY`.
 4. Run `yarn dev` to start local development server.
 
-## 💁 Acknowledgement
+## 🙋 We're hiring
+Come help us make TabbyML even better. We're growing fast [and would love for you to join us](https://tabbyml.notion.site/Careers-35b1a77f3d1743d9bae06b7d6d5b814a).
+
+## ❤️ Acknowledgement
 
 Many thanks to WizAI for contributing with [code-search](https://github.com/wizi-ai/code-search), a project that QuickQuestion branched from.
