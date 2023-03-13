@@ -1,5 +1,5 @@
 ## ⁉️ QuickQuestion
-![Docker build status](https://img.shields.io/github/actions/workflow/status/TabbyML/quick-question/docker.yml)
+![Docker build status](https://img.shields.io/github/actions/workflow/status/TabbyML/quick-question/docker.yml?label=docker%20image%20build)
 
 > **Warning**
 > This is work in progress, it is not a production ready solution.
