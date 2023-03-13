@@ -72,7 +72,7 @@ a {
   margin-bottom: 1em;
 }
 
-@media (orientation: portrait) {
+@media (max-width: 1280px) {
   .menu {
     display: none;
   }
