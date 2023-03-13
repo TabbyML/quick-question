@@ -34,7 +34,7 @@ docker run --rm -it -p 3000:3000 \
   ghcr.io/tabbyml/quick-question:main
 ```
 
-## 📖 Development
+## 🛠️ Development
 1. Make sure [git-lfs](https://git-lfs.com/) is installed.
 2. Clone the repository, runs `yarn` to install dependencies.
 3. Copy `.env.sample` to `.env.local`, and set your `OPENAI_API_KEY`.
