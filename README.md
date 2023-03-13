@@ -1,4 +1,4 @@
-## ⁉️ Quick Question
+## ⁉️ QuickQuestion
 
 > **Warning**
 > This is work in progress, it is not a production ready solution.
@@ -19,4 +19,4 @@ An incubating AI-powered stackoverflow for your codebase, by [TabbyML](https://t
 
 ## 💁 Acknowledgement
 
-Many thanks to WizAI for contributing with [code-search](https://github.com/wizi-ai/code-search), a project that this project branched from.
+Many thanks to WizAI for contributing with [code-search](https://github.com/wizi-ai/code-search), a project that QuickQuestion branched from.
