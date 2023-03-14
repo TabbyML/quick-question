@@ -2,7 +2,7 @@ import path from "path";
 import assert from "assert";
 import { parseFile } from "../src/parser";
 
-describe("parseFile", function () {
+describe("parseFile: python", function () {
   it("should success", async function () {
     const chunks = await parseFile("./tests/data/python.py");
     assert.equal(chunks.length, 2);
@@ -11,7 +11,7 @@ describe("parseFile", function () {
   });
 });
 
-describe("parseFile", function () {
+describe("parseFile: typescript", function () {
   it("should success", async function () {
     const chunks = await parseFile("./tests/data/typescript.ts");
     assert.equal(chunks.length, 2);

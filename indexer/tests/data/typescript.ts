@@ -28,3 +28,5 @@ class Greeter {
 
 let greeter = new Greeter("world");
 logWithDividing(greeter.greet());
+
+export {};
