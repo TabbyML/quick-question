@@ -25,10 +25,11 @@ async function indexRepo(input: string, output: string, dryrun: boolean) {
 
   for await (const p of walk(input)) {
     const chunks = await parseFile(p);
-    for (const { code, range } of chunks) {
+    for (const { language, code, range } of chunks) {
       const document = new Document({
         pageContent: code.slice(0, MAX_DOC_LENGTH),
         metadata: {
+          language,
           source: path.relative(input, p),
           range,
         },

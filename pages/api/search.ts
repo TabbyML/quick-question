@@ -35,6 +35,7 @@ export default async function handler(
         return {
           pageContent: code,
           metadata: {
+            language: result[0].metadata.language,
             source: result[0].metadata.source,
             score: 1.0 - result[1],
             summary: await llm.call(prompt),

@@ -18,6 +18,7 @@ import ReactMarkdown from "react-markdown";
 
 interface CodeSnippetMeta {
   source: string;
+  language: string;
   score: number;
   summary: string;
   lineNumber: number;
@@ -265,7 +266,7 @@ export default function Home({ metadata, indexing }: HomeProps) {
               </Grid>
               <Grid item xs={12}>
                 <SyntaxHighlighter
-                  language="python"
+                  language={match.metadata.language}
                   style={atomDark}
                   customStyle={{ color: "red" }}
                   startingLineNumber={match.metadata.lineNumber}
