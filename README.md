@@ -37,6 +37,8 @@ docker run --rm -it -p 3000:3000 \
 ## 🛠️ Development
 1. Make sure [git-lfs](https://git-lfs.com/) is installed.
 2. Clone the repository, runs `yarn` to install dependencies.
+3. Run `yarn lerna run build`.
+4. Switch workdir to `./packages/quick-question`.
 3. Copy `.env.sample` to `.env.local`, and set your `OPENAI_API_KEY`.
 4. Run `yarn dev` to start local development server.
 
