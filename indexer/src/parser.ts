@@ -32,7 +32,7 @@ const LanguageInfos: Array<LanguageInfo> = [
     language: require("tree-sitter-typescript").typescript,
     extensions: [".ts"],
     nodeTypes: ["function_declaration", "class_declaration"],
-    maxLevel: 3,
+    maxLevel: 1,
     minLoc: 4,
   },
 ];
