@@ -1,21 +1,21 @@
 FROM node:16
 
-WORKDIR /usr/src/app/indexer
-
-COPY indexer/package.json ./
-COPY indexer/yarn.lock ./
-
-RUN yarn --prod
-
 WORKDIR /usr/src/app
+
+RUN npm config set registry https://registry.npmmirror.com
 
 COPY package.json ./
 COPY yarn.lock ./
+COPY lerna.json ./
 
-RUN yarn --prod
+
+COPY packages/quick-question/package.json ./packages/quick-question/
+COPY packages/quick-question-indexer/package.json ./packages/quick-question-indexer/
+
+RUN yarn
 
 COPY . .
 
-RUN yarn build
+RUN yarn lerna run build
 
-CMD [ "yarn", "start" ]
+CMD [ "yarn", "lerna", "run", "start", "--scope=quick-question"]
