@@ -28,6 +28,13 @@ const LanguageInfos: Array<LanguageInfo> = [
     maxLevel: 3,
     minLoc: 4,
   },
+  {
+    language: require("tree-sitter-typescript").typescript,
+    extensions: [".ts"],
+    nodeTypes: ["function_declaration", "class_declaration"],
+    maxLevel: 3,
+    minLoc: 4,
+  },
 ];
 
 export async function parseFile(file: string): Promise<Chunk[]> {
