@@ -24,7 +24,7 @@ cd quick-question
 
 # Setup environment variables
 export OPENAI_API_KEY=xxx
-export REPO_DIR=data/diffusers
+export REPO_DIR=../../data/diffusers
 
 # Start container
 docker run --rm -it -p 3000:3000 \

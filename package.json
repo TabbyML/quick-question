@@ -1,40 +1,13 @@
 {
-  "name": "quick-question",
-  "version": "0.1.0",
+  "name": "root",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "index": "./indexer/node_modules/ts-node/dist/bin.js indexer/src/index.ts -i $REPO_DIR/metadata.json",
-    "index:local": "dotenv -e .env.local yarn index"
-  },
-  "dependencies": {
-    "@dqbd/tiktoken": "^0.3.0",
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^5.11.9",
-    "@mui/lab": "^5.0.0-alpha.120",
-    "@mui/material": "^5.11.10",
-    "@next/font": "13.1.6",
-    "@types/node": "18.14.0",
-    "@types/react": "18.0.28",
-    "@types/react-dom": "18.0.11",
-    "@types/react-syntax-highlighter": "^15.5.6",
-    "dotenv-cli": "^7.1.0",
-    "eslint": "8.34.0",
-    "eslint-config-next": "13.1.6",
-    "hnswlib-node": "^1.4.2",
-    "langchain": "^0.0.11",
-    "next": "13.1.6",
-    "openai": "^3.1.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.7.1",
-    "react-markdown": "^8.0.5",
-    "react-syntax-highlighter": "^15.5.0",
-    "typescript": "4.9.5"
+  "workspaces": [
+    "packages/quick-question",
+    "packages/quick-question-indexer"
+  ],
+  "devDependencies": {
+    "lerna": "^6.5.1",
+    "syncpack": "^9.8.4"
   },
   "engines": {
     "node": ">= 16.0.0 < 17.0.0"

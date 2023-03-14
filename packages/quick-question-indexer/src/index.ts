@@ -3,7 +3,6 @@ import path from "path";
 
 import { simpleGit } from "simple-git";
 
-import { Command } from "commander";
 import { HNSWLib } from "langchain/vectorstores";
 import { OpenAIEmbeddings } from "langchain/embeddings";
 import { Document } from "langchain/document";
@@ -79,7 +78,7 @@ interface IndexParams {
   dryrun: boolean;
 }
 
-async function main({ input, dryrun }: IndexParams) {
+export async function buildIndex({ input, dryrun }: IndexParams) {
   input = path.resolve(input);
   console.log("Processing metadata", input);
   const metadata = JSON.parse(fs.readFileSync(input, "utf-8"));
@@ -104,12 +103,3 @@ async function main({ input, dryrun }: IndexParams) {
   // Build index.
   await indexRepo(repositoryDir, indexDir, dryrun);
 }
-
-const program = new Command();
-
-program
-  .requiredOption("-i, --input <config>", "Configuration file")
-  .option("--no-dryrun")
-  .action(main);
-
-program.parse();

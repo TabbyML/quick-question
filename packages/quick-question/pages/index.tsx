@@ -1,4 +1,5 @@
 import { useEffect, useState, ReactNode } from "react";
+import { useRouter } from "next/router";
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
@@ -16,6 +17,12 @@ import Layout from "components/Layout";
 
 import ReactMarkdown from "react-markdown";
 
+import {
+  Metadata,
+  IndexingStatus,
+  getRepositoryManager,
+} from "services/RepositoryManager";
+
 interface CodeSnippetMeta {
   source: string;
   language: string;
@@ -29,17 +36,9 @@ interface CodeSnippet {
   metadata: CodeSnippetMeta;
 }
 
-interface IndexingResult {
-  status: "init" | "success" | "pending" | "failed";
-}
-
 interface HomeProps {
-  metadata: {
-    name: string;
-    exampleQueries: string[];
-  };
-
-  indexing: IndexingResult;
+  metadata: Metadata;
+  indexing: IndexingStatus;
 }
 
 const HomeContainer = (props: { children: ReactNode }) => (
@@ -88,7 +87,16 @@ export default function Home({ metadata, indexing }: HomeProps) {
     </HomeContainer>
   );
 
-  if (indexing.status === "failed") {
+  const router = useRouter();
+  useEffect(() => {
+    if (indexing !== "failed" && indexing !== "success") {
+      setTimeout(() => {
+        router.reload();
+      }, 20000);
+    }
+  });
+
+  if (indexing === "failed") {
     return (
       <InfoContainer>
         <Alert severity="error" sx={{ mb: 4 }}>
@@ -98,7 +106,7 @@ export default function Home({ metadata, indexing }: HomeProps) {
     );
   }
 
-  if (indexing.status !== "success") {
+  if (indexing !== "success") {
     return (
       <InfoContainer>
         <Alert severity="warning" sx={{ mb: 4 }}>
@@ -284,53 +292,13 @@ export default function Home({ metadata, indexing }: HomeProps) {
   );
 }
 
-import fs from "fs";
-import path from "path";
-import { exec } from "child_process";
-
 export async function getServerSideProps(context: any) {
   const server = (context.res.socket as any).server;
-  const indexing = indexingJob(server);
-
-  const metadataFile = path.join(
-    process.cwd(),
-    process.env.REPO_DIR!,
-    "metadata.json"
-  );
-  const metadata = JSON.parse(fs.readFileSync(metadataFile, "utf-8"));
+  const repository = getRepositoryManager(server);
   return {
-    props: { metadata, indexing },
+    props: {
+      metadata: repository.metadata,
+      indexing: repository.getIndexingStatus(),
+    },
   };
-}
-
-function indexingJob(server: any): IndexingResult {
-  if (server.indexingJob) {
-    if (server.indexingJob.status) {
-      return server.indexingJob;
-    } else {
-      return { status: "pending" };
-    }
-  } else {
-    if (
-      fs.existsSync(path.join(process.cwd(), process.env.REPO_DIR!, "index/docstore.json"))
-    ) {
-      server.indexingJob = { status: "success" };
-      return server.indexingJob;
-    }
-
-    server.indexingJob = new Promise((resolve, reject) => {
-      exec("yarn index --no-dryrun", (error, stdout, stderr) => {
-        if (error) {
-          console.error(stderr);
-          reject(error);
-        }
-        server.indexingJob = {
-          status: error ? "failed" : "success",
-        };
-      });
-    });
-    return {
-      status: "init",
-    };
-  }
 }
