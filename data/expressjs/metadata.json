@@ -1,0 +1,8 @@
+{
+  "name": "expressjs/express",
+  "exampleQueries": [
+    "How do I render pages using template?",
+    "How can I authenticate users?",
+    "How do I setup an error handler?"
+  ]
+}
