@@ -1,4 +1,5 @@
 import { useEffect, useState, ReactNode } from "react";
+import { useRouter } from "next/router";
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
@@ -19,7 +20,7 @@ import ReactMarkdown from "react-markdown";
 import {
   Metadata,
   IndexingStatus,
-  repository,
+  getRepositoryManager,
 } from "services/RepositoryManager";
 
 interface CodeSnippetMeta {
@@ -85,6 +86,15 @@ export default function Home({ metadata, indexing }: HomeProps) {
       </div>
     </HomeContainer>
   );
+
+  const router = useRouter();
+  useEffect(() => {
+    if (indexing !== "failed" && indexing !== "success") {
+      setTimeout(() => {
+        router.reload();
+      }, 20000);
+    }
+  });
 
   if (indexing === "failed") {
     return (
@@ -283,10 +293,12 @@ export default function Home({ metadata, indexing }: HomeProps) {
 }
 
 export async function getServerSideProps(context: any) {
+  const server = (context.res.socket as any).server;
+  const repository = getRepositoryManager(server);
   return {
     props: {
       metadata: repository.metadata,
-      indexing: await repository.indexingJob,
+      indexing: repository.getIndexingStatus(),
     },
   };
 }

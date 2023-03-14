@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "index": "./indexer/node_modules/ts-node/dist/bin.js indexer/src/cli.ts -i $REPO_DIR/metadata.json",
-    "index:local": "dotenv -e .env.local yarn index"
+    "lint": "next lint"
   },
   "dependencies": {
     "@dqbd/tiktoken": "^0.3.0",
@@ -34,6 +32,7 @@
     "react-icons": "^4.7.1",
     "react-markdown": "^8.0.5",
     "react-syntax-highlighter": "^15.5.0",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "quick-question-indexer": "*"
   }
 }

@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-import { exec } from "child_process";
+import { buildIndex } from "quick-question-indexer";
 
 export interface Metadata {
   name: string;
@@ -11,20 +11,11 @@ export interface Metadata {
 export type IndexingStatus = "init" | "success" | "pending" | "failed";
 
 class RepositoryManager {
-  indexingJob: Promise<IndexingStatus>;
+  indexingJob?: Promise<void>;
+  indexingStatus: IndexingStatus = "init";
   metadata: Metadata;
 
   constructor() {
-    if (
-      fs.existsSync(
-        path.join(process.cwd(), process.env.REPO_DIR!, "index/docstore.json")
-      )
-    ) {
-      this.indexingJob = Promise.resolve("success");
-    } else {
-      this.indexingJob = indexJob();
-    }
-
     const metadataFile = path.join(
       process.cwd(),
       process.env.REPO_DIR!,
@@ -32,18 +23,43 @@ class RepositoryManager {
     );
     this.metadata = JSON.parse(fs.readFileSync(metadataFile, "utf-8"));
   }
+
+  getIndexingStatus(): IndexingStatus {
+    if (
+      fs.existsSync(
+        path.join(process.cwd(), process.env.REPO_DIR!, "index/docstore.json")
+      )
+    ) {
+      return "success";
+    }
+
+    if (!this.indexingJob) {
+      this.indexingStatus = "pending";
+      this.indexingJob = createIndexingJob().then((status) => {
+        this.indexingStatus = status;
+      });
+    }
+
+    return this.indexingStatus;
+  }
 }
 
-async function indexJob(): Promise<IndexingStatus> {
-  return await new Promise((resolve, reject) => {
-    exec("yarn index --no-dryrun", (error, stdout, stderr) => {
-      if (error) {
-        console.error(stderr);
-        reject(error);
-      }
-      resolve(error ? "failed" : "success");
+async function createIndexingJob(): Promise<IndexingStatus> {
+  try {
+    await buildIndex({
+      input: path.join(process.cwd(), process.env.REPO_DIR!, "metadata.json"),
+      dryrun: false,
     });
-  });
+    return "success";
+  } catch (err) {
+    console.error("Failed indexing", err);
+    return "failed";
+  }
 }
 
-export const repository = new RepositoryManager();
+export function getRepositoryManager(ctx: any): RepositoryManager {
+  if (!ctx.repositoryManager) {
+    ctx.repositoryManager = new RepositoryManager();
+  }
+  return ctx.repositoryManager;
+}
