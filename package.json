@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "index": "./indexer/node_modules/ts-node/dist/bin.js indexer/src/index.ts -i $REPO_DIR/metadata.json",
+    "index": "./indexer/node_modules/ts-node/dist/bin.js indexer/src/cli.ts -i $REPO_DIR/metadata.json",
     "index:local": "dotenv -e .env.local yarn index"
   },
   "dependencies": {
