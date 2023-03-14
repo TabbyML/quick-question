@@ -5,6 +5,7 @@ import TreeSitter, { SyntaxNode } from "tree-sitter";
 import { TextBuffer, Location } from "superstring";
 
 export interface Chunk {
+  language: string;
   code: string;
   range: {
     start: Location;
@@ -74,6 +75,7 @@ async function* walkTree(
     node.endPosition.row - node.startPosition.row + 1 >= info.minLoc
   ) {
     yield {
+      language: info.language.name,
       code: code.getTextInRange({
         start: node.startPosition,
         end: node.endPosition,
