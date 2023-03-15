@@ -8,7 +8,7 @@
 
 An incubating AI-powered stackoverflow for your codebase, by [TabbyML](https://tabbyml.com)
 
-[Live Demo for huggingface/diffusers](https://quick-question.vercel.app)
+[Live Demo for pallets/flask](https://quick-question.fly.dev/pallets/flask)
 
 ![Example Quick Question](example-quick-question.png)
 

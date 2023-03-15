@@ -14,7 +14,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-import { FaHome, FaCodepen } from "react-icons/fa";
+import { FaGithub, FaCodepen } from "react-icons/fa";
 
 import Text from "components/Text";
 
@@ -68,7 +68,10 @@ export default function Layout(props: LayoutProps) {
           open={true}
           style={{ height: "100vh", position: "static" }}
         >
-          <Link href="https://tabbyml.com">
+          <Link
+            href="https://github.com/TabbyML/quick-question"
+            target="_blank"
+          >
             <Toolbar
               style={{
                 position: "relative",
@@ -79,7 +82,7 @@ export default function Layout(props: LayoutProps) {
                 width: "26px",
               }}
             >
-              <FaHome size="26" />
+              <FaGithub size="26" />
             </Toolbar>
           </Link>
           <Divider />
