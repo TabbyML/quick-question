@@ -30,8 +30,8 @@ const LanguageInfos: Array<LanguageInfo> = [
     minLoc: 4,
   },
   {
-    language: require("tree-sitter-typescript").typescript,
-    extensions: [".ts"],
+    language: require("tree-sitter-typescript").tsx,
+    extensions: [".js", ".jsm", ".ts", ".jsx", ".tsx"],
     nodeTypes: ["function_declaration", "class_declaration"],
     maxLevel: 1,
     minLoc: 4,

@@ -19,3 +19,12 @@ describe("parseFile: typescript", function () {
     assert.match(chunks[1].code, /class Greeter.*/);
   });
 });
+
+describe("parseFile: tsx", function () {
+  it("should success", async function () {
+    const chunks = await parseFile("./tests/data/tsx.tsx");
+    assert.equal(chunks.length, 2);
+    assert.match(chunks[0].code, /function BarComponent.*/);
+    assert.match(chunks[1].code, /class ContainerComponent.*/);
+  });
+});
