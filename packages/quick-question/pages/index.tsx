@@ -3,7 +3,6 @@ import { useEffect, useState, ReactNode } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import Container from "@mui/material/Container";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 
@@ -12,26 +11,18 @@ import Layout from "components/Layout";
 
 import { ProjectInfo, getRepositoryManager } from "services/RepositoryManager";
 
-const HomeContainer = (props: { children: ReactNode }) => (
-  <main>
-    <Layout>
-      <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
-        {props.children}
-      </Container>
-    </Layout>
-  </main>
-);
-
 interface HomeProps {
   projects: ProjectInfo[];
 }
 export default function Home({ projects }: HomeProps) {
   return (
-    <HomeContainer>
-      {projects.map((x, i) => (
-        <Row key={i} project={x} />
-      ))}
-    </HomeContainer>
+    <main>
+      <Layout>
+        {projects.map((x, i) => (
+          <Row key={i} project={x} />
+        ))}
+      </Layout>
+    </main>
   );
 }
 

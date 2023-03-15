@@ -5,7 +5,6 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 import Alert from "@mui/material/Alert";
-import Container from "@mui/material/Container";
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -38,11 +37,7 @@ interface HomeProps {
 
 const HomeContainer = (props: { children: ReactNode }) => (
   <main>
-    <Layout>
-      <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
-        {props.children}
-      </Container>
-    </Layout>
+    <Layout>{props.children}</Layout>
   </main>
 );
 
@@ -93,7 +88,7 @@ export default function Home({ project }: HomeProps) {
       }, 20000);
       return () => {
         clearTimeout(id);
-      }
+      };
     }
   });
 
@@ -126,38 +121,6 @@ export default function Home({ project }: HomeProps) {
     <HomeContainer>
       <Grid
         container
-        alignItems="center"
-        sx={{
-          mt: 6,
-          mb: 1,
-          border: 1,
-          borderColor: "divider",
-          pt: 1,
-          pb: 1,
-          pl: 2,
-          pr: 1,
-          borderRadius: "5px",
-        }}
-      >
-        <Grid item xs={10} justifyContent="space-between" alignItems="center">
-          <Grid item xs={10} sx={{ pl: 2 }}>
-            <Text type="header" variant="subtitle1">
-              {metadata.name}
-            </Text>
-          </Grid>
-        </Grid>
-        <Grid item xs={2} style={{ textAlign: "right" }}>
-          <Chip
-            label="indexed"
-            color="primary"
-            size="medium"
-            sx={{ fontSize: "0.9rem", ml: 1 }}
-            variant="outlined"
-          />
-        </Grid>
-      </Grid>
-      <Grid
-        container
         sx={{
           border: 1,
           borderColor: "divider",
@@ -168,7 +131,7 @@ export default function Home({ project }: HomeProps) {
         <Grid item xs={12} sx={{ pl: 4, pr: 4, pt: 4, pb: 4 }}>
           <Grid item xs={12}>
             <Text type="header" variant="subtitle1">
-              Ask a question about your codebase...
+              Ask a question about {project.metadata.name} ...
             </Text>
           </Grid>
           <Grid item xs={12} sx={{ mt: 4 }}>
