@@ -73,9 +73,29 @@ async function indexRepo(input: string, output: string, dryrun: boolean) {
   await vectorStore.save(output);
 }
 
+async function gitCloneRepository(name: string, repositoryDir: string) {
+  // Clone github
+  const git = simpleGit(repositoryDir);
+  if (fs.existsSync(repositoryDir)) {
+    console.log("Git repository exists, updating...");
+    await git.pull();
+  } else {
+    console.log("Git repository does not exists, cloning...");
+    const githubUrl = `https://github.com/${name}`;
+    await git.clone(githubUrl, repositoryDir, { "--depth": 1 });
+  }
+  return {
+    revision: await git.revparse("HEAD"),
+  };
+}
+
 interface IndexParams {
   input: string;
   dryrun: boolean;
+}
+
+export interface IndexMetadata {
+  revision: string;
 }
 
 export async function buildIndex({ input, dryrun }: IndexParams) {
@@ -88,18 +108,20 @@ export async function buildIndex({ input, dryrun }: IndexParams) {
   const repositoryDir = path.join(baseDir, "repository");
   const indexDir = path.join(baseDir, "index");
 
-  // Clone github
-  if (fs.existsSync(repositoryDir)) {
-    console.log("Git repository exists, updating...");
-    const git = simpleGit(repositoryDir);
-    await git.pull();
-  } else {
-    console.log("Git repository does not exists, cloning...");
-    const git = simpleGit();
-    const githubUrl = `https://github.com/${metadata.name}`;
-    await git.clone(githubUrl, repositoryDir, { "--depth": 1 });
-  }
+  const { revision } = await gitCloneRepository(
+    metadata.name,
+    repositoryDir
+  );
 
   // Build index.
   await indexRepo(repositoryDir, indexDir, dryrun);
+
+  // Save index metadata
+  const indexMetadata: IndexMetadata = {
+    revision
+  };
+  await fs.writeFileSync(
+    path.join(indexDir, "metadata.json"),
+    JSON.stringify(indexMetadata)
+  );
 }

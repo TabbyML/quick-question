@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import { globSync } from "glob";
-import { buildIndex } from "quick-question-indexer";
+import { buildIndex, IndexMetadata } from "quick-question-indexer";
 
 export interface Metadata {
   name: string;
@@ -14,6 +14,7 @@ export type IndexingStatus = "init" | "success" | "pending" | "failed";
 export interface ProjectInfo {
   metadata: Metadata;
   indexingStatus: IndexingStatus;
+  indexMetadata: IndexMetadata | null;
 }
 
 class Project {
@@ -21,6 +22,7 @@ class Project {
   readonly metadata: Metadata;
   indexingStatus: IndexingStatus = "init";
   indexingJob?: Promise<void>;
+  indexMetadata?: IndexMetadata;
 
   constructor(metadataFile: string) {
     this.projectDir = path.dirname(metadataFile);
@@ -40,6 +42,19 @@ class Project {
     }
 
     return this.indexingStatus;
+  }
+
+  fetchIndexMetadata(): IndexMetadata | null {
+    if (this.indexingStatus !== "success") {
+      return null;
+    }
+    const indexMetadataFile = path.join(this.projectDir, "index/metadata.json");
+    if (fs.existsSync(indexMetadataFile)) {
+      this.indexMetadata = JSON.parse(
+        fs.readFileSync(indexMetadataFile, "utf-8")
+      ) as IndexMetadata;
+    }
+    return this.indexMetadata  || null;
   }
 }
 
@@ -69,6 +84,7 @@ class RepositoryManager {
     return this.projects.map((x) => ({
       metadata: x.metadata,
       indexingStatus: x.fetchIndexingStatus(true),
+      indexMetadata: x.fetchIndexMetadata(),
     }));
   }
 
@@ -78,6 +94,7 @@ class RepositoryManager {
         return {
           metadata: x.metadata,
           indexingStatus: x.fetchIndexingStatus(false),
+          indexMetadata: x.fetchIndexMetadata(),
         };
     }
 
