@@ -42,7 +42,7 @@ const HomeContainer = (props: { children: ReactNode }) => (
 );
 
 export default function Home({ project }: HomeProps) {
-  const { metadata, indexingStatus } = project;
+  const { metadata, indexingStatus, indexMetadata } = project;
 
   const [searchQuery, setSearchQuery] = useState<string>(
     metadata.exampleQueries[0]
@@ -116,6 +116,8 @@ export default function Home({ project }: HomeProps) {
       </InfoContainer>
     );
   }
+
+  const revision = indexMetadata?.revision || "main";
 
   return (
     <HomeContainer>
@@ -218,7 +220,7 @@ export default function Home({ project }: HomeProps) {
                   label="View on Github"
                   color="default"
                   component="a"
-                  href={`https://github.com/${metadata.name}/tree/main/${match.metadata.source}#L${match.metadata.lineNumber}`}
+                  href={`https://github.com/${metadata.name}/tree/${revision}/${match.metadata.source}#L${match.metadata.lineNumber}`}
                   size="small"
                   sx={{ fontSize: "0.85rem", ml: 1, p: 1 }}
                   variant="outlined"
