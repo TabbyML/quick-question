@@ -2,8 +2,6 @@ FROM node:16
 
 WORKDIR /usr/src/app
 
-RUN npm config set registry https://registry.npmmirror.com
-
 COPY package.json ./
 COPY yarn.lock ./
 COPY lerna.json ./
