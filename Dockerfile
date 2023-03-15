@@ -12,8 +12,6 @@ COPY packages/quick-question-indexer/package.json ./packages/quick-question-inde
 
 RUN yarn
 
-COPY . .
+COPY packages packages
 
 RUN yarn lerna run build
-
-CMD [ "yarn", "lerna", "run", "start", "--scope=quick-question"]
