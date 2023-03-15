@@ -15,6 +15,7 @@ export interface Chunk {
 
 interface LanguageInfo {
   language: any;
+  languageName: string;
   extensions: Array<string>;
   nodeTypes: Array<string>;
   maxLevel: number;
@@ -24,6 +25,7 @@ interface LanguageInfo {
 const LanguageInfos: Array<LanguageInfo> = [
   {
     language: require("tree-sitter-python"),
+    languageName: "python",
     extensions: [".py"],
     nodeTypes: ["function_definition", "class_definition"],
     maxLevel: 3,
@@ -31,7 +33,32 @@ const LanguageInfos: Array<LanguageInfo> = [
   },
   {
     language: require("tree-sitter-typescript").tsx,
-    extensions: [".js", ".jsm", ".ts", ".jsx", ".tsx"],
+    languageName: "javascript",
+    extensions: [".js", ".jsm", ".cjs", ".mjs"],
+    nodeTypes: ["function_declaration", "class_declaration"],
+    maxLevel: 1,
+    minLoc: 4,
+  },
+  {
+    language: require("tree-sitter-typescript").tsx,
+    languageName: "typescript",
+    extensions: [".ts"],
+    nodeTypes: ["function_declaration", "class_declaration"],
+    maxLevel: 1,
+    minLoc: 4,
+  },
+  {
+    language: require("tree-sitter-typescript").tsx,
+    languageName: "jsx",
+    extensions: [".jsx"],
+    nodeTypes: ["function_declaration", "class_declaration"],
+    maxLevel: 1,
+    minLoc: 4,
+  },
+  {
+    language: require("tree-sitter-typescript").tsx,
+    languageName: "tsx",
+    extensions: [".tsx"],
     nodeTypes: ["function_declaration", "class_declaration"],
     maxLevel: 1,
     minLoc: 4,
@@ -75,7 +102,7 @@ async function* walkTree(
     node.endPosition.row - node.startPosition.row + 1 >= info.minLoc
   ) {
     yield {
-      language: info.language.name,
+      language: info.languageName,
       code: code.getTextInRange({
         start: node.startPosition,
         end: node.endPosition,
