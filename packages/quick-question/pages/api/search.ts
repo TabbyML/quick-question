@@ -31,11 +31,12 @@ export default async function handler(
 
       const formattedResults = queryResult.map(async (result: any[]) => {
         const code = result[0].pageContent;
-        const prompt = CodeTemplate.format({ query, code });
+        const language = result[0].metadata.language;
+        const prompt = CodeTemplate.format({ language, query, code });
         return {
           pageContent: code,
           metadata: {
-            language: result[0].metadata.language,
+            language: language,
             source: result[0].metadata.source,
             score: 1.0 - result[1],
             summary: await llm.call(prompt),
@@ -53,12 +54,12 @@ export default async function handler(
 }
 
 const CodeTemplate = new PromptTemplate({
-  template: `Given the following python code and a question, create a concise answer in markdown.
+  template: `Given the following {language} code and a question, create a concise answer in markdown.
 =========
 {code}
 =========
 
 QUESTION: {query}
 FINAL ANSWER:`,
-  inputVariables: ["query", "code"],
+  inputVariables: ["language", "query", "code"],
 });
