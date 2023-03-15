@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -13,7 +14,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-import { FaHome, FaSearch } from "react-icons/fa";
+import { FaHome, FaCodepen } from "react-icons/fa";
 
 import Text from "components/Text";
 
@@ -95,11 +96,11 @@ export default function Layout(props: LayoutProps) {
                 }}
               >
                 <ListItemIcon style={{ display: "block" }}>
-                  <FaSearch />
+                  <FaCodepen />
                 </ListItemIcon>
                 <ListItemText style={{ marginTop: "-6px" }}>
                   <Text type="text" variant="subtitle2">
-                    Search
+                    Projects
                   </Text>
                 </ListItemText>
               </ListItemButton>
@@ -107,7 +108,9 @@ export default function Layout(props: LayoutProps) {
           </List>
         </Drawer>
         <div style={{ width: "100%", minHeight: "100vh" }}>
-          {props.children}
+          <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
+            {props.children}
+          </Container>
         </div>
       </Box>
     </Box>

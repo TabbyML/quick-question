@@ -7,19 +7,22 @@ import { OpenAIEmbeddings } from "langchain/embeddings";
 import { OpenAI } from "langchain/llms";
 import { PromptTemplate } from "langchain/prompts";
 
+import { getRepositoryManager } from "services/RepositoryManager";
+
 const NUM_RESULTS = 3;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const { query } = req.body;
+  const { query, project } = req.body;
+  const repository = getRepositoryManager((res.socket! as any).server);
   switch (req.method) {
     case "POST": {
       const log = console.log;
       console.log = () => {};
       const vectorStore = await HNSWLib.load(
-        path.join(process.cwd(), process.env.REPO_DIR!, "index"),
+        path.join(repository.getProject(project).projectDir, "index"),
         new OpenAIEmbeddings()
       );
 
