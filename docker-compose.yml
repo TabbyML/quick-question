@@ -18,5 +18,5 @@ services:
     secrets:
       - openai_api_key
     environment:
-      - REPO_DIR=../../data
+      - REPO_DIR=/usr/src/app/data
       - OPENAI_API_KEY=/run/secrets/openai_api_key
