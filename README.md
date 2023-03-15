@@ -18,7 +18,7 @@ Make sure [git-lfs](https://git-lfs.com/) is installed.
 
 ```bash
 # Clone the repository
-git clone git@github.com:TabbyML/quick-question.git
+git clone https://github.com/TabbyML/quick-question
 
 # Save your OPENAI_API_KEY to file as secret
 echo YOUR_OPENAI_API_KEY > openai_api_key.txt
