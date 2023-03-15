@@ -35,7 +35,7 @@ export default async function handler(
       const formattedResults = queryResult.map(async (result: any[]) => {
         const code = result[0].pageContent;
         const language = result[0].metadata.language;
-        const prompt = CodeTemplate.format({ language, query, code });
+        const prompt = await CodeTemplate.format({ language, query, code });
         return {
           pageContent: code,
           metadata: {

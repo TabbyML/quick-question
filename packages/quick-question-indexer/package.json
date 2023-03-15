@@ -1,5 +1,6 @@
 {
   "name": "quick-question-indexer",
+  "type": "module",
   "version": "0.0.1",
   "bin": {
     "quick-question-indexer": "dist/lib/cli.js"
@@ -8,7 +9,7 @@
   "typings": "dist/types/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc --module node16",
+    "build": "tsc --module es2020",
     "test": "mocha",
     "test:watch": "mocha --watch"
   },
@@ -16,7 +17,7 @@
     "@dqbd/tiktoken": "^0.3.0",
     "commander": "^10.0.0",
     "hnswlib-node": "^1.4.2",
-    "langchain": "^0.0.11",
+    "langchain": "0.0.33",
     "simple-git": "^3.17.0",
     "superstring": "^2.4.4",
     "tree-sitter": "^0.20.1",
