@@ -4,7 +4,7 @@ import path from "path";
 
 import { HNSWLib } from "langchain/vectorstores";
 import { OpenAIEmbeddings } from "langchain/embeddings";
-import { OpenAI } from "langchain/llms";
+import { OpenAIChat } from "langchain/llms";
 import { PromptTemplate } from "langchain/prompts";
 
 import { getRepositoryManager } from "services/RepositoryManager";
@@ -26,7 +26,7 @@ export default async function handler(
         new OpenAIEmbeddings()
       );
 
-      const llm = new OpenAI({ temperature: 0.2 });
+      const llm = new OpenAIChat({ temperature: 0.2, cache: true });
       const queryResult = await vectorStore.similaritySearchWithScore(
         query,
         NUM_RESULTS
