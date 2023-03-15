@@ -23,16 +23,17 @@
     "dotenv-cli": "^7.1.0",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "glob": "^9.3.0",
     "hnswlib-node": "^1.4.2",
     "langchain": "^0.0.11",
     "next": "13.1.6",
     "openai": "^3.1.0",
+    "quick-question-indexer": "*",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
     "react-markdown": "^8.0.5",
     "react-syntax-highlighter": "^15.5.0",
-    "typescript": "4.9.5",
-    "quick-question-indexer": "*"
+    "typescript": "4.9.5"
   }
 }
