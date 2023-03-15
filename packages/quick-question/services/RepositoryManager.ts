@@ -22,12 +22,12 @@ class Project {
   indexingStatus: IndexingStatus = "init";
   indexingJob?: Promise<void>;
 
-  constructor(metadataFile) {
+  constructor(metadataFile: string) {
     this.projectDir = path.dirname(metadataFile);
     this.metadata = JSON.parse(fs.readFileSync(metadataFile, "utf-8"));
   }
 
-  private fetchIndexingStatus(dryrun: boolean): IndexingStatus {
+  fetchIndexingStatus(dryrun: boolean): IndexingStatus {
     if (fs.existsSync(path.join(this.projectDir, "index/docstore.json"))) {
       return "success";
     }
@@ -43,7 +43,7 @@ class Project {
   }
 }
 
-async function createIndexingJob(projectDir): Promise<IndexingStatus> {
+async function createIndexingJob(projectDir: string): Promise<IndexingStatus> {
   try {
     await buildIndex({
       input: path.join(projectDir, "metadata.json"),

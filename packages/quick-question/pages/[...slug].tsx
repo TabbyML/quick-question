@@ -33,7 +33,7 @@ interface CodeSnippet {
 }
 
 interface HomeProps {
-  project: Project;
+  project: ProjectInfo;
 }
 
 const HomeContainer = (props: { children: ReactNode }) => (

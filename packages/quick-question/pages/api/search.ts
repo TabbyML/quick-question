@@ -16,7 +16,7 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   const { query, project } = req.body;
-  const repository = getRepositoryManager(res.socket.server);
+  const repository = getRepositoryManager((res.socket! as any).server);
   switch (req.method) {
     case "POST": {
       const log = console.log;
