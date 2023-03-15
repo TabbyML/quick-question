@@ -1,0 +1,22 @@
+version: '3'
+
+secrets:
+  openai_api_key:
+    file: ./openai_api_key.txt
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src/app
+    volumes:
+      - ./data:/usr/src/app/data
+    command: yarn lerna run start --scope=quick-question
+    ports:
+      - 3000:3000
+    secrets:
+      - openai_api_key
+    environment:
+      - REPO_DIR=../../data
+      - OPENAI_API_KEY=/run/secrets/openai_api_key

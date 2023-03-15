@@ -15,5 +15,3 @@ RUN yarn
 COPY . .
 
 RUN yarn lerna run build
-
-CMD [ "yarn", "lerna", "run", "start", "--scope=quick-question"]
