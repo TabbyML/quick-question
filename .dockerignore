@@ -1,4 +1,2 @@
-data
 **/node_modules
 packages/quick-question/.env.*
-openai_api_key.txt
