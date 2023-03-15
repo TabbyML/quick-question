@@ -28,8 +28,8 @@ interface HomeProps {
 export default function Home({ projects }: HomeProps) {
   return (
     <HomeContainer>
-      {projects.map((x) => (
-        <Row project={x} />
+      {projects.map((x, i) => (
+        <Row key={i} project={x} />
       ))}
     </HomeContainer>
   );

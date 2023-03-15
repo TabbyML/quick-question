@@ -88,9 +88,12 @@ export default function Home({ project }: HomeProps) {
   const router = useRouter();
   useEffect(() => {
     if (indexingStatus !== "failed" && indexingStatus !== "success") {
-      setTimeout(() => {
+      const id = setTimeout(() => {
         router.reload();
       }, 20000);
+      return () => {
+        clearTimeout(id);
+      }
     }
   });
 
