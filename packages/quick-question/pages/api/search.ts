@@ -47,7 +47,11 @@ export default async function handler(
           },
         };
       });
-      return res.status(200).json(await Promise.all(formattedResults));
+
+      const results = (await Promise.all(formattedResults)).filter(
+        ({ metadata }) => !metadata.summary.includes("NOT HELPFUL")
+      );
+      return res.status(200).json(results);
     }
     default: {
       res.setHeader("Allow", ["POST"]);
@@ -58,6 +62,7 @@ export default async function handler(
 
 const CodeTemplate = new PromptTemplate({
   template: `Given the following {language} code and a question, create a concise answer in markdown.
+If the snippet is not really helpful, just say "NOT HELPFUL".
 =========
 {code}
 =========
