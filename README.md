@@ -7,8 +7,7 @@
 
 ## 🤔 What is this?
 
-An incubating AI-powered Q&A for your codebase, by [TabbyML](https://tabbyml.com)
-
+An incubating AI-powered Q&A for your codebase.
 [Live Demo for huggingface/diffusers](https://quick-question.fly.dev/huggingface/diffusers)
 
 ![Example Quick Question](example-quick-question.png)
