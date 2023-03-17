@@ -24,7 +24,7 @@ git clone https://github.com/TabbyML/quick-question.git
 echo YOUR_OPENAI_API_KEY > openai_api_key.txt
 
 # Start container
-docket-compose up
+docker-compose up
 ```
 
 ## 🛠️ Development
