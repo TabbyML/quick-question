@@ -75,14 +75,19 @@ async function indexRepo(input: string, output: string, dryrun: boolean) {
 
 async function gitCloneRepository(name: string, repositoryDir: string) {
   // Clone github
+  var isClone = false;
+  if (!fs.existsSync(repositoryDir)) {
+    isClone = true;
+    fs.mkdirSync(repositoryDir);
+  }
   const git = simpleGit(repositoryDir);
-  if (fs.existsSync(repositoryDir)) {
-    console.log("Git repository exists, updating...");
-    await git.pull();
-  } else {
+  if (isClone) {
     console.log("Git repository does not exists, cloning...");
     const githubUrl = `https://github.com/${name}`;
     await git.clone(githubUrl, repositoryDir, { "--depth": 1 });
+  } else {
+    console.log("Git repository exists, updating...");
+    await git.pull();
   }
   return {
     revision: await git.revparse("HEAD"),
