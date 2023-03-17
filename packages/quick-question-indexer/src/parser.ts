@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 
 import TreeSitter, { SyntaxNode } from "tree-sitter";
+import TreeSitterPython from "tree-sitter-python";
+import TreeSitterTypescript from "tree-sitter-typescript";
 import { TextBuffer, Location } from "superstring";
 
 export interface Chunk {
@@ -24,7 +26,7 @@ interface LanguageInfo {
 
 const LanguageInfos: Array<LanguageInfo> = [
   {
-    language: require("tree-sitter-python"),
+    language: TreeSitterPython,
     languageName: "python",
     extensions: [".py"],
     nodeTypes: ["function_definition", "class_definition"],
@@ -32,7 +34,7 @@ const LanguageInfos: Array<LanguageInfo> = [
     minLoc: 4,
   },
   {
-    language: require("tree-sitter-typescript").tsx,
+    language: TreeSitterTypescript.tsx,
     languageName: "javascript",
     extensions: [".js", ".jsm", ".cjs", ".mjs"],
     nodeTypes: ["function_declaration", "class_declaration"],
@@ -40,7 +42,7 @@ const LanguageInfos: Array<LanguageInfo> = [
     minLoc: 4,
   },
   {
-    language: require("tree-sitter-typescript").tsx,
+    language: TreeSitterTypescript.tsx,
     languageName: "typescript",
     extensions: [".ts"],
     nodeTypes: ["function_declaration", "class_declaration"],
@@ -48,7 +50,7 @@ const LanguageInfos: Array<LanguageInfo> = [
     minLoc: 4,
   },
   {
-    language: require("tree-sitter-typescript").tsx,
+    language: TreeSitterTypescript.tsx,
     languageName: "jsx",
     extensions: [".jsx"],
     nodeTypes: ["function_declaration", "class_declaration"],
@@ -56,7 +58,7 @@ const LanguageInfos: Array<LanguageInfo> = [
     minLoc: 4,
   },
   {
-    language: require("tree-sitter-typescript").tsx,
+    language: TreeSitterTypescript.tsx,
     languageName: "tsx",
     extensions: [".tsx"],
     nodeTypes: ["function_declaration", "class_declaration"],
