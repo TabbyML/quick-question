@@ -47,11 +47,13 @@ export default function Home({ project }: HomeProps) {
   const [searchQuery, setSearchQuery] = useState<string>(
     metadata.exampleQueries[0]
   );
-  const [isLoading, setIsLoading] = useState(false);
+
+  // One of: initial, loading, loaded
+  const [status, setStatus] = useState('initial');
   const [matches, setMatches] = useState<CodeSnippet[]>([]);
 
   const getSearchResults = async () => {
-    setIsLoading(true);
+    setStatus('loading');
 
     const response = await fetch("/api/search", {
       method: "POST",
@@ -65,7 +67,7 @@ export default function Home({ project }: HomeProps) {
     });
     const data = await response.json();
     setMatches(data);
-    setIsLoading(false);
+    setStatus('loaded');
   };
 
   const InfoContainer = (props: { children: ReactNode }) => (
@@ -175,7 +177,7 @@ export default function Home({ project }: HomeProps) {
           }}
         >
           <LoadingButton
-            loading={isLoading}
+            loading={status === 'loading'}
             variant="outlined"
             onClick={getSearchResults}
           >
@@ -183,12 +185,15 @@ export default function Home({ project }: HomeProps) {
           </LoadingButton>
         </Grid>
       </Grid>
-      <Grid container sx={{ mt: 6 }}>
-        {matches.length > 0 && (
-          <Grid item xs={8} sx={{ mb: 4 }}>
-            <Text type="header" variant="h4">
-              Top matches
-            </Text>
+      {status === 'loaded' && <Grid container sx={{ mt: 6 }}>
+        <Grid item xs={8} sx={{ mb: 4 }}>
+          <Text type="header" variant="h4">
+            Top matches
+          </Text>
+        </Grid>
+        {matches.length == 0 && (
+          <Grid item xs={12}>
+            <div style={{ textAlign: "center" }}> (No matches)</div>
           </Grid>
         )}
         {matches.map((match, it) => (
@@ -226,7 +231,7 @@ export default function Home({ project }: HomeProps) {
                   variant="outlined"
                   clickable
                   target="_blank"
-                  onDelete={() => {}}
+                  onDelete={() => { }}
                   deleteIcon={<LaunchIcon />}
                 />
               </Grid>
@@ -252,7 +257,7 @@ export default function Home({ project }: HomeProps) {
             </Grid>
           </Grid>
         ))}
-      </Grid>
+      </Grid>}
     </HomeContainer>
   );
 }
