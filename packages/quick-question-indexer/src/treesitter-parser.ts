@@ -1,6 +1,8 @@
 import TreeSitter, { SyntaxNode } from "tree-sitter";
 import TreeSitterPython from "tree-sitter-python";
 import TreeSitterTypescript from "tree-sitter-typescript";
+import TreeSitterJava from "tree-sitter-java";
+import TreeSitterKotlin from "tree-sitter-kotlin";
 import { TextBuffer } from "superstring";
 import { Chunk, CodeParser } from "./parser";
 
@@ -94,4 +96,12 @@ export class PythonParser extends TreeSitterParser {
 
 export class TsxParser extends TreeSitterParser {
   language = TreeSitterTypescript.tsx;
+}
+
+export class JavaParser extends TreeSitterParser {
+  language = TreeSitterJava;
+}
+
+export class KotlinParser extends TreeSitterParser {
+  language = TreeSitterKotlin;
 }
