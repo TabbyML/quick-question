@@ -3,7 +3,7 @@ package tests.data;
 /**
  * Simple class printing messages.
  */
-@AnyAnnotation
+@AnyAnnotation("this")
 public class Greeter {
     String hello = "Hello ";
 
@@ -16,3 +16,5 @@ public class Greeter {
     }
 }
 
+public class Ignore {
+}

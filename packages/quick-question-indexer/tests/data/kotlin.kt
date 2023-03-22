@@ -22,3 +22,10 @@ class Greeter(message: String) {
         val hello = "Hello"
     }
 }
+
+/**
+ * Class with annotation.
+ */
+@AnyAnnotation("this")
+class Foo() {
+}
