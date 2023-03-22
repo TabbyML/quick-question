@@ -26,7 +26,14 @@ class Greeter {
   }
 }
 
-let greeter = new Greeter("world");
-logWithDividing(greeter.greet());
+/**
+ * This comment should be included.
+ */
+function functionWithComment() {
+  let greeter = new Greeter("world");
+  logWithDividing(greeter.greet());
+}
+// 
+functionWithComment();
 
 export {};
