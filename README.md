@@ -23,6 +23,13 @@ git clone https://github.com/TabbyML/quick-question.git
 # Save your OPENAI_API_KEY to file as secret
 echo YOUR_OPENAI_API_KEY > openai_api_key.txt
 
+# Setup your own codebase (Optional).
+# Replace 'your_project_name' and 'your_github_repository_name' with your own,
+# 'your_github_repository_name' could be something like 'TabbyML/quick-question'.
+# See also ./data/diffusers/metadata.json
+mkdir ./data/your_project_name
+echo '{"name":"your_github_repository_name","exampleQueries":["How to ...?"]}' > ./data/your_project_name/metadata.json
+
 # Start container
 docker-compose up
 ```
