@@ -4954,7 +4954,7 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@^2.14.0, nan@^2.14.2, nan@^2.15.0:
+nan@^2.12.1, nan@^2.14.0, nan@^2.14.1, nan@^2.14.2, nan@^2.15.0:
   version "2.17.0"
   resolved "https://registry.npmjs.org/nan/-/nan-2.17.0.tgz"
   integrity sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==
@@ -6961,6 +6961,20 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.npmmirror.com/tr46/-/tr46-0.0.3.tgz"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
+
+tree-sitter-java@^0.19.1:
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/tree-sitter-java/-/tree-sitter-java-0.19.1.tgz#c1bf59caaa81bf8a4a6dda99e7c97e51b3bd26d4"
+  integrity sha512-yVm+4q1D4niaHcEf2iqhOcIaiSp3wxHjeC4eoLAqSQNVxSrhThmT1FEfM4yDgHV4XaxH+62xpKHCwYG9NzRt6Q==
+  dependencies:
+    nan "^2.14.1"
+
+tree-sitter-kotlin@^0.2.11:
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/tree-sitter-kotlin/-/tree-sitter-kotlin-0.2.11.tgz#1ffaa4b81ea0dd57940981e0070493d9f6622345"
+  integrity sha512-xrLaWDZws7kYakkVGclw9lC8X78lOi+pbYt1MoTmtzkhUFcmJSIaOpM7sPaiWlXaVcAk1jRY/0ZbcRMMn0P6Mw==
+  dependencies:
+    nan "^2.12.1"
 
 tree-sitter-python@^0.20.1:
   version "0.20.1"

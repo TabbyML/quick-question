@@ -1,7 +1,12 @@
 import fs from "fs";
 import path from "path";
 import { Location } from "superstring";
-import { PythonParser, TsxParser } from "./treesitter-parser";
+import {
+  PythonParser,
+  TsxParser,
+  JavaParser,
+  KotlinParser,
+} from "./treesitter-parser";
 
 export interface Chunk {
   language: string;
@@ -25,7 +30,7 @@ interface LanguageInfo {
 const LanguageInfos: Array<LanguageInfo> = [
   {
     languageName: "python",
-    parser: new PythonParser,
+    parser: new PythonParser(),
     extensions: [".py"],
   },
   {
@@ -47,6 +52,16 @@ const LanguageInfos: Array<LanguageInfo> = [
     languageName: "tsx",
     parser: new TsxParser({ languageName: "tsx" }),
     extensions: [".tsx"],
+  },
+  {
+    languageName: "java",
+    parser: new JavaParser(),
+    extensions: [".java"],
+  },
+  {
+    languageName: "kotlin",
+    parser: new KotlinParser(),
+    extensions: [".kt"],
   },
 ];
 
