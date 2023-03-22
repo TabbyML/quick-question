@@ -36,7 +36,7 @@ docker-compose up
 4. Run `yarn dev` to start local development server.
 
 ## 🙋 We're hiring
-Come help us make TabbyML even better. We're growing fast [and would love for you to join us](https://tabbyml.notion.site/Careers-35b1a77f3d1743d9bae06b7d6d5b814a).
+Come help us make Tabby even better. We're growing fast [and would love for you to join us](https://tabbyml.notion.site/Careers-35b1a77f3d1743d9bae06b7d6d5b814a).
 
 ## ❤️ Acknowledgement
 
