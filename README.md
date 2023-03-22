@@ -17,20 +17,26 @@ An incubating AI-powered Q&A for your codebase.
 Make sure [git-lfs](https://git-lfs.com/) is installed.
 
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/TabbyML/quick-question.git
 
-# Save your OPENAI_API_KEY to file as secret
+# 2. Save your OPENAI_API_KEY to file as secret
 echo YOUR_OPENAI_API_KEY > openai_api_key.txt
 
-# Setup your own codebase (Optional).
-# Replace 'your_project_name' and 'your_github_repository_name' with your own,
-# 'your_github_repository_name' could be something like 'TabbyML/quick-question'.
-# See also ./data/diffusers/metadata.json
+# 3. Run Quick Question on your github project.
+# 3.1. Create a directory in './data' for your project, replace 
+#      'your_project_name' with your own.
 mkdir ./data/your_project_name
-echo '{"name":"your_github_repository_name","exampleQueries":["How to ...?"]}' > ./data/your_project_name/metadata.json
 
-# Start container
+# 3.2. Copy metadata template to your project directory.
+cp ./data/metadata_example.json ./data/your_project_name/metadata.json
+
+# 3.3. Edit metadata.json, replace 'your_github_repository_name' with your own,
+#      'your_github_repository_name' could be like 'TabbyML/quick-question'.
+#      See also ./data/diffusers/metadata.json
+vim ./data/your_project_name/metadata.json
+
+# 4. Start container
 docker-compose up
 ```
 

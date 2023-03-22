@@ -1,3 +1,4 @@
 *
 !.gitignore
+!metadata_example.json
 !/diffusers
