@@ -26,22 +26,18 @@ Make sure [git-lfs](https://git-lfs.com/) is installed.
     echo YOUR_OPENAI_API_KEY > openai_api_key.txt
     ```
 
-3. Run Quick Question on your github project.
-   1. Create a directory in `./data` for your project, replace 
-   `your_project_name` with your own.
-        ```bash
-        mkdir ./data/your_project_name
-        ```
-   
+3. **Optional** Run Quick Question on your github project.
+   1. Create new directory for you project under `/data`, e.g `/data/quick-question`.
    2. Add a new `metadata.json` file in your project directory.
-   Here is a templete of file content, replace `your_github_repository_name` with your own, for example `TabbyML/quick-question`.  
-   See also `./data/diffusers/metadata.json`.
+   Here is a templete of file content, replace `{GITHUB_PROJECT}` with your own project name, e.g `TabbyML/quick-question`.  
         ```json
         {
-            "name": "your_github_repository_name",
+            "name": "{GITHUB_PROJECT}",
             "exampleQueries": ["How to ...?"]
         }
         ```
+
+        > See [./data/diffusers/metadata.json](./data/diffusers/metadata.json) for a complete example.
 
 4. Start container.
     ```
