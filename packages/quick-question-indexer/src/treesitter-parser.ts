@@ -3,8 +3,7 @@ import TreeSitterPython from "tree-sitter-python";
 import TreeSitterTypescript from "tree-sitter-typescript";
 import TreeSitterJava from "tree-sitter-java";
 import TreeSitterKotlin from "tree-sitter-kotlin";
-import { TextBuffer } from "superstring";
-import { Chunk, CodeParser } from "./parser";
+import { Location, Chunk, CodeParser } from "./parser";
 
 interface TreeSitterParserOptions {
   languageName?: string;
@@ -47,16 +46,27 @@ class TreeSitterParser implements CodeParser {
   async *traverse(
     nodes: SyntaxNode[],
     level: number
-  ): AsyncIterable<{ start: TreeSitter.Point; end: TreeSitter.Point }> {
+  ): AsyncIterable<{
+    start: { index: number; location: Location };
+    end: { index: number; location: Location };
+  }> {
     if (level > this.maxLevel) return;
     const nodeTypes = nodes.map((node) => node.type);
     let index = 0;
     while (index < nodeTypes.length) {
       const matched = this.match(nodeTypes.slice(index));
       if (matched) {
+        const startNode = nodes[index];
+        const endNode = nodes[index + matched.length - 1];
         const result = {
-          start: nodes[index].startPosition,
-          end: nodes[index + matched.length - 1].endPosition,
+          start: {
+            index: startNode.startIndex,
+            location: startNode.startPosition,
+          },
+          end: {
+            index: endNode.endIndex,
+            location: endNode.endPosition,
+          },
         };
         yield result;
         index += matched.length;
@@ -71,15 +81,16 @@ class TreeSitterParser implements CodeParser {
     const parser = new TreeSitter();
     parser.setLanguage(this.language);
     const tree = parser.parse(code);
-    const codeBuffer = new TextBuffer(code);
     const ranges = this.traverse([tree.rootNode], 0);
     const result: Array<Chunk> = [];
     for await (const range of ranges) {
-      if (range.end.row - range.start.row + 1 < this.minLoc) continue;
+      if (range.end.location.row - range.start.location.row + 1 < this.minLoc) {
+        continue;
+      }
       result.push({
         language: this.languageName,
-        code: codeBuffer.getTextInRange(range),
-        range,
+        code: code.slice(range.start.index, range.end.index),
+        range: { start: range.start.location, end: range.end.location },
       });
     }
     return result;

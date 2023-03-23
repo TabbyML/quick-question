@@ -19,7 +19,6 @@
     "hnswlib-node": "^1.4.2",
     "langchain": "0.0.33",
     "simple-git": "^3.17.0",
-    "superstring": "^2.4.4",
     "tree-sitter": "^0.20.1",
     "tree-sitter-java": "^0.19.1",
     "tree-sitter-kotlin": "^0.2.11",
