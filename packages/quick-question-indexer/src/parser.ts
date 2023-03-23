@@ -1,12 +1,16 @@
 import fs from "fs";
 import path from "path";
-import { Location } from "superstring";
 import {
   PythonParser,
   TsxParser,
   JavaParser,
   KotlinParser,
 } from "./treesitter-parser";
+
+export interface Location {
+  column: number;
+  row: number;
+}
 
 export interface Chunk {
   language: string;
