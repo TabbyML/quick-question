@@ -2,9 +2,6 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Docker build status](https://img.shields.io/github/actions/workflow/status/TabbyML/quick-question/docker.yml?label=docker%20image%20build)
 
-> **Warning**
-> This is work in progress, it is not a production ready solution.
-
 ## 🤔 What is this?
 
 An incubating AI-powered Q&A for your codebase.
