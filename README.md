@@ -47,10 +47,7 @@ Make sure [git-lfs](https://git-lfs.com/) is installed.
 3. Run `yarn lerna run build`.
 4. Switch workdir to `./packages/quick-question`.
 3. Copy `.env.sample` to `.env.local`, and set your `OPENAI_API_KEY`.
-4. Run `yarn dev` to start local development server.
-
-## 🙋 We're hiring
-Come help us make Tabby even better. We're growing fast [and would love for you to join us](https://tabbyml.notion.site/Careers-35b1a77f3d1743d9bae06b7d6d5b814a).
+4. Run `yarn dev` to start local development 
 
 ## ❤️ Acknowledgement
 
